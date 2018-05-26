@@ -23,14 +23,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
+//    http
+//        .authorizeRequests()
+//        .antMatchers("/")
+//        .permitAll()
+//        .anyRequest().authenticated()
+//        .and()
+//        .formLogin()
+//        .loginPage("/login")
+//        .defaultSuccessUrl("/welcome")
+//        .permitAll()
+//        .and()
+//        .logout()
+//        .permitAll();
     http
         .authorizeRequests()
-        .antMatchers("/")
-        .permitAll()
+        .antMatchers("/login", "/register", "/reg").permitAll()
         .anyRequest().authenticated()
         .and()
         .formLogin()
         .loginPage("/login")
+        .failureUrl("/login?error")
         .defaultSuccessUrl("/welcome")
         .permitAll()
         .and()
@@ -41,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(WebSecurity web) throws Exception {
     //解决静态资源被拦截的问题
-    web.ignoring().antMatchers("/css/**").antMatchers("/templates/**");
+    web.ignoring().antMatchers("/css/**");
   }
 
 }
